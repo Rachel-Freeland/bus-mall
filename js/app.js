@@ -50,16 +50,17 @@ function pickProducts() {
   const leftProdIndex = Math.floor(Math.random() * Product.allProducts.length);
   const midProdIndex = Math.floor(Math.random() * Product.allProducts.length);
   let rightProdIndex;
+
   while (rightProdIndex === undefined || rightProdIndex === midProdIndex || rightProdIndex === leftProdIndex) {
     rightProdIndex = Math.floor(Math.random() * Product.allProducts.length);
+    // assign the current products based off the index numbers generated
+    currentLeftProd = Product.allProducts[leftProdIndex];
+    currentMidProd = Product.allProducts[midProdIndex];
+    currentRightProd = Product.allProducts[rightProdIndex];
   }
 }
 
 
-// assign the current products based off the index numbers generated
-currentLeftProd = Product.allProducts[leftProdIndex];
-currentMidProd = Product.allProducts[midProdIndex];
-currentRightProd = Product.allProducts[rightProdIndex];
 
 
 function renderVoteTally() {
@@ -94,7 +95,7 @@ function handleClick(e) {
       }
       // render new
       pickProducts();
-      renderThreeProds(currentLeftProd, currentMidProd, currentRightProd)
+      renderThreeProds(currentLeftProd, currentMidProd, currentRightProd);
     }
   } else {
     allProductsSectionTag.removeEventListener('click', handleClick);
