@@ -4,14 +4,19 @@
 
 const voteTallyUlElem = document.getElementById('voteTally');
 const allProductsSectionTag = document.getElementById('allProducts');
-const leftProdDivTag = document.getElementById('leftProduct');
-const middleProdDivTag = document.getElementById('midProduct');
-const rightProdDivTag = document.getElementById('rightProduct');
-const leftProdH2Elem = document.getElementById('leftProdH2');
-const midProdH2Elem = document.getElementById('midProdH2');
-const rightProdH2Elem = document.getElementById('rightProdH2');
+const leftProdImgTag = document.getElementById('leftProd_img');
+const midProdImgTag = document.getElementById('midProd_img');
+const rightProdImgTag = document.getElementById('rightProd_img');
+const leftProdH2Elem = document.getElementById('leftProd_h2');
+const midProdH2Elem = document.getElementById('midProd_h2');
+const rightProdH2Elem = document.getElementById('rightProd_h2');
 
 let voteCounter = 0;
+
+// current product
+let currentLeftProd = null;
+let currentMidProd = null;
+let currentRightProd = null;
 
 // Create product constructor function
 function Product(name, imgPath) {
@@ -31,9 +36,73 @@ Product.allProducts = [];
 Product.prototype.renderProduct = function(h2, imgTag) {
   imgTag.src = this.imgPath;
   h2.textContent = this.name;
-}
+};
 
 // make a global function that takes 3 products and calls their render method
+function renderThreeProds(leftProd, midProd, rightProd) {
+  leftProd.renderProduct(leftProdH2Elem, leftProdImgTag);
+  midProd.renderProduct(midProdH2Elem, midProdImgTag);
+  rightProd.renderProduct(rightProdH2Elem, rightProdImgTag);
+}
+
+// pick random products and make sure that all 3 products displayed are different products
+function pickProducts() {
+  const leftProdIndex = Math.floor(Math.random() * Product.allProducts.length);
+  const midProdIndex = Math.floor(Math.random() * Product.allProducts.length);
+  let rightProdIndex;
+  while (rightProdIndex === undefined || rightProdIndex === midProdIndex || rightProdIndex === leftProdIndex) {
+    rightProdIndex = Math.floor(Math.random() * Product.allProducts.length);
+  }
+}
+
+
+// assign the current products based off the index numbers generated
+currentLeftProd = Product.allProducts[leftProdIndex];
+currentMidProd = Product.allProducts[midProdIndex];
+currentRightProd = Product.allProducts[rightProdIndex];
+
+
+function renderVoteTally() {
+  voteTallyUlElem.innerHTML = '';
+  const h2Elem = document.createElement('h2');
+  h2Elem.textContent = 'Voting Results';
+  voteTallyUlElem.appendChild(h2Elem);
+  for (let product of Product.allProducts) {
+    const liElem = document.createElement('li');
+    liElem.textContent = `${Product.name} : ${Product.votes}`;
+    voteTallyUlElem.appendChild(liElem);
+  }
+}
+
+function handleClick(e) {
+  console.log('I am listening');
+  let thingTheyClickedOn = e.target;
+  console.log(thingTheyClickedOn);
+  if (voteCounter < 10) {
+    if (thingTheyClickedOn === leftProdImgTag || thingTheyClickedOn === midProdImgTag || thingTheyClickedOn === rightProdImgTag) {
+      // add 1 to the vote and increment the counter
+      voteCounter++;
+      // add to the image the clicked on
+      if (thingTheyClickedOn === leftProdImgTag) {
+        currentLeftProd.votes++;
+      }
+      else if (thingTheyClickedOn === midProdImgTag) {
+        currentMidProd.votes++;
+      }
+      else {
+        currentRightProd.votes++;
+      }
+      // render new
+      pickProducts();
+      renderThreeProds(currentLeftProd, currentMidProd, currentRightProd)
+    }
+  } else {
+    allProductsSectionTag.removeEventListener('click', handleClick);
+  }
+}
+
+// add a listener and a handler
+allProductsSectionTag.addEventListener('click',handleClick);
 
 
 
@@ -41,13 +110,23 @@ Product.prototype.renderProduct = function(h2, imgTag) {
 
 
 
-console.log(voteTallyUlElem);
-console.log(allProductsSectionTag);
-console.log(leftProdDivTag);
-console.log(middleProdDivTag);
-console.log(rightProdDivTag);
-console.log(leftProdH2Elem);
-console.log(midProdH2Elem);
-console.log(rightProdH2Elem);
-console.log(voteCounter);
-Product(n, i)
+new Product('bag', '/img/bag.jpg.url');
+new Product('banana', '/img/banana.jpg.url');
+new Product('bathroom', '/img/bathroom/jpg.url');
+new Product('boots', '/img/boots.jpg.url');
+new Product('breakfast', '/img/breakfast.jpg.url');
+new Product('bubblegum', '/img/bubblegum.jpg.url');
+new Product('chair', '/img/chair.jpg.url');
+new Product('cthulhu', '/img/cthulhu.jpg.url');
+new Product('dog-duck', '/img/dog-duck.jpg.url');
+new Product('dragon', '/img/dragon.jpg.url');
+new Product('pen', 'pen.jpg.url');
+new Product('pet-sweep', '/img/pet-sweep.jpg.url');
+new Product('scissors', '/img/scissors.jpg.url');
+new Product('shark', '/img/shark.jpg.url');
+new Product('sweep', '/img/sweep.jpg.url');
+new Product('tauntaun', '/img/tauntaun.jpg.url');
+new Product('unicorn', '/img/unicorn.jpg.url');
+new Product('water-can', '/img/water-can.jpg.url');
+new Product('wine-glass', '/img/wine-glass.jpg.url');
+renderThreeProds(currentLeftProd, currentMidProd, currentRightProd);
