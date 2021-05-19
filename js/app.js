@@ -1,6 +1,6 @@
 'use strict';
 
-// Global variables & Constants
+//------------------------------------ Global variables & Constants
 
 const voteTallyUlElem = document.getElementById('voteTally');
 const allProductsSectionTag = document.getElementById('allProducts');
@@ -17,6 +17,8 @@ let voteCounter = 0;
 let currentLeftProd = null;
 let currentMidProd = null;
 let currentRightProd = null;
+
+//------------------------------------- Functions
 
 // Create product constructor function
 function Product(name, imgPath) {
@@ -46,30 +48,32 @@ function renderThreeProds(leftProd, midProd, rightProd) {
 }
 
 // pick random products and make sure that all 3 products displayed are different products
-function pickProducts() {
+function pickRandomProducts() {
   const leftProdIndex = Math.floor(Math.random() * Product.allProducts.length);
   const midProdIndex = Math.floor(Math.random() * Product.allProducts.length);
   let rightProdIndex;
+
   while (rightProdIndex === undefined || rightProdIndex === midProdIndex || rightProdIndex === leftProdIndex) {
     rightProdIndex = Math.floor(Math.random() * Product.allProducts.length);
+    // assign the current products based off the index numbers generated
+    currentLeftProd = Product.allProducts[leftProdIndex];
+    currentMidProd = Product.allProducts[midProdIndex];
+    currentRightProd = Product.allProducts[rightProdIndex];
   }
 }
 
 
-// assign the current products based off the index numbers generated
-currentLeftProd = Product.allProducts[leftProdIndex];
-currentMidProd = Product.allProducts[midProdIndex];
-currentRightProd = Product.allProducts[rightProdIndex];
 
 
 function renderVoteTally() {
   voteTallyUlElem.innerHTML = '';
   const h2Elem = document.createElement('h2');
-  h2Elem.textContent = 'Voting Results';
+  h2Elem.textContent = 'Voting Results: ';
   voteTallyUlElem.appendChild(h2Elem);
+  // for (let i =  0; i < Product.allProducts.length; i++) {
   for (let product of Product.allProducts) {
     const liElem = document.createElement('li');
-    liElem.textContent = `${Product.name} : ${Product.votes}`;
+    liElem.textContent = `${Product.name}: ${Product.votes}`;
     voteTallyUlElem.appendChild(liElem);
   }
 }
@@ -85,19 +89,23 @@ function handleClick(e) {
       // add to the image the clicked on
       if (thingTheyClickedOn === leftProdImgTag) {
         currentLeftProd.votes++;
+        currentLeftProd.timesShown++;
       }
       else if (thingTheyClickedOn === midProdImgTag) {
         currentMidProd.votes++;
+        currentMidProd.timeShown++;
       }
       else {
         currentRightProd.votes++;
+        currentRightProd.timesShown++;
       }
       // render new
-      pickProducts();
-      renderThreeProds(currentLeftProd, currentMidProd, currentRightProd)
+      pickRandomProducts();
+      renderThreeProds(currentLeftProd, currentMidProd, currentRightProd);
     }
   } else {
     allProductsSectionTag.removeEventListener('click', handleClick);
+    renderVoteTally();
   }
 }
 
@@ -105,28 +113,25 @@ function handleClick(e) {
 allProductsSectionTag.addEventListener('click',handleClick);
 
 
+new Product('R2-D2 Bag', './img/bag.jpg');
+new Product('Banana Slicer', './img/banana.jpg');
+new Product('Bathroom Tablet Stand', './img/bathroom/jpg');
+new Product('Boots', './img/boots.jpg');
+new Product('Breakfast Maker', './img/breakfast.jpg');
+new Product('Meatball Bubblegum', './img/bubblegum.jpg');
+new Product('Chair', './img/chair.jpg');
+new Product('Cthulhu', './img/cthulhu.jpg');
+new Product('Dog-Duck Muzzle', './img/dog-duck.jpg');
+new Product('Dragon Meat', './img/dragon.jpg');
+new Product('Utensil Pen', './img/pen.jpg');
+new Product('Pet Sweep', './img/pet-sweep.jpg');
+new Product('Pizza Scissors', './img/scissors.jpg');
+new Product('Shark Sleeping Bag', './img/shark.jpg');
+new Product('Baby Sweep', './img/sweep.jpg');
+new Product('Tauntaun Sleeping Bag', './img/tauntaun.jpg');
+new Product('Unicorn Meat', './img/unicorn.jpg');
+new Product('Water Can', './img/water-can.jpg');
+new Product('Wine Glass', './img/wine-glass.jpg');
 
-
-
-
-
-new Product('bag', '/img/bag.jpg.url');
-new Product('banana', '/img/banana.jpg.url');
-new Product('bathroom', '/img/bathroom/jpg.url');
-new Product('boots', '/img/boots.jpg.url');
-new Product('breakfast', '/img/breakfast.jpg.url');
-new Product('bubblegum', '/img/bubblegum.jpg.url');
-new Product('chair', '/img/chair.jpg.url');
-new Product('cthulhu', '/img/cthulhu.jpg.url');
-new Product('dog-duck', '/img/dog-duck.jpg.url');
-new Product('dragon', '/img/dragon.jpg.url');
-new Product('pen', 'pen.jpg.url');
-new Product('pet-sweep', '/img/pet-sweep.jpg.url');
-new Product('scissors', '/img/scissors.jpg.url');
-new Product('shark', '/img/shark.jpg.url');
-new Product('sweep', '/img/sweep.jpg.url');
-new Product('tauntaun', '/img/tauntaun.jpg.url');
-new Product('unicorn', '/img/unicorn.jpg.url');
-new Product('water-can', '/img/water-can.jpg.url');
-new Product('wine-glass', '/img/wine-glass.jpg.url');
+pickRandomProducts();
 renderThreeProds(currentLeftProd, currentMidProd, currentRightProd);
