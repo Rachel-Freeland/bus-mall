@@ -73,7 +73,7 @@ function renderVoteTally() {
   // for (let i =  0; i < Product.allProducts.length; i++) {
   for (let product of Product.allProducts) {
     const liElem = document.createElement('li');
-    liElem.textContent = `${Product.name}: ${Product.votes}`;
+    liElem.textContent = `${product.name}: ${product.votes}`;
     voteTallyUlElem.appendChild(liElem);
   }
 }
@@ -113,10 +113,10 @@ function handleClick(e) {
 allProductsSectionTag.addEventListener('click',handleClick);
 
 
-new Product('R2-D2 Bag', './img/bag.jpg');
-new Product('Banana Slicer', './img/banana.jpg');
-new Product('Bathroom Tablet Stand', './img/bathroom/jpg');
-new Product('Boots', './img/boots.jpg');
+new Product('R2-D2 Bag', 'img/bag.jpg');
+new Product('Banana Slicer', 'img/banana.jpg');
+new Product('Bathroom Tablet Stand', 'img/bathroom/jpg');
+new Product('Boots', 'img/boots.jpg');
 new Product('Breakfast Maker', './img/breakfast.jpg');
 new Product('Meatball Bubblegum', './img/bubblegum.jpg');
 new Product('Chair', './img/chair.jpg');
