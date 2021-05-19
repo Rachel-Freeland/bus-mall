@@ -70,8 +70,8 @@ function renderVoteTally() {
   const h2Elem = document.createElement('h2');
   h2Elem.textContent = 'Voting Results: ';
   voteTallyUlElem.appendChild(h2Elem);
-  for (let i =  0; i < Product.allProducts.length; i++) {
-  // for (let Product of Product.allProducts) {
+  // for (let i =  0; i < Product.allProducts.length; i++) {
+  for (let product of Product.allProducts) {
     const liElem = document.createElement('li');
     liElem.textContent = `${Product.name}: ${Product.votes}`;
     voteTallyUlElem.appendChild(liElem);
