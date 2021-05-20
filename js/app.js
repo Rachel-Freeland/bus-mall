@@ -45,6 +45,10 @@ function renderThreeProds(leftProd, midProd, rightProd) {
   leftProd.renderProduct(leftProdH2Elem, leftProdImgTag);
   midProd.renderProduct(midProdH2Elem, midProdImgTag);
   rightProd.renderProduct(rightProdH2Elem, rightProdImgTag);
+  currentLeftProd.timesShown++;
+  currentMidProd.timesShown++;
+  currentRightProd.timesShown++;
+  // console.log(currentRightProd);
 }
 
 // pick random products and make sure that all 3 products displayed are different products
@@ -73,7 +77,7 @@ function renderVoteTally() {
   // for (let i =  0; i < Product.allProducts.length; i++) {
   for (let product of Product.allProducts) {
     const liElem = document.createElement('li');
-    liElem.textContent = `${product.name}: ${product.votes}`;
+    liElem.textContent = `${product.name}: ${product.votes}: ${product.timesShown}`;
     voteTallyUlElem.appendChild(liElem);
   }
 }
@@ -89,15 +93,15 @@ function handleClick(e) {
       // add to the image the clicked on
       if (thingTheyClickedOn === leftProdImgTag) {
         currentLeftProd.votes++;
-        currentLeftProd.timesShown++;
+        // currentLeftProd.timesShown++;
       }
       else if (thingTheyClickedOn === midProdImgTag) {
         currentMidProd.votes++;
-        currentMidProd.timeShown++;
+        // currentMidProd.timeShown++;
       }
       else {
         currentRightProd.votes++;
-        currentRightProd.timesShown++;
+        // currentRightProd.timesShown++;
       }
       // render new
       pickRandomProducts();
@@ -115,7 +119,7 @@ allProductsSectionTag.addEventListener('click',handleClick);
 
 new Product('R2-D2 Bag', 'img/bag.jpg');
 new Product('Banana Slicer', 'img/banana.jpg');
-new Product('Bathroom Tablet Stand', 'img/bathroom/jpg');
+new Product('Bathroom Tablet Stand', './img/bathroom.jpg');
 new Product('Boots', 'img/boots.jpg');
 new Product('Breakfast Maker', './img/breakfast.jpg');
 new Product('Meatball Bubblegum', './img/bubblegum.jpg');
@@ -127,7 +131,7 @@ new Product('Utensil Pen', './img/pen.jpg');
 new Product('Pet Sweep', './img/pet-sweep.jpg');
 new Product('Pizza Scissors', './img/scissors.jpg');
 new Product('Shark Sleeping Bag', './img/shark.jpg');
-new Product('Baby Sweep', './img/sweep.jpg');
+new Product('Baby Sweep', './img/sweep.png');
 new Product('Tauntaun Sleeping Bag', './img/tauntaun.jpg');
 new Product('Unicorn Meat', './img/unicorn.jpg');
 new Product('Water Can', './img/water-can.jpg');
