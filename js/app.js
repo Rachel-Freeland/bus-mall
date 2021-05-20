@@ -123,10 +123,10 @@ midProdImgTag.addEventListener('click',handleClick);
 rightProdImgTag.addEventListener('click',handleClick);
 
 
-new Product('R2-D2 Bag', 'img/bag.jpg');
-new Product('Banana Slicer', 'img/banana.jpg');
+new Product('R2-D2 Bag', './img/bag.jpg');
+new Product('Banana Slicer', './img/banana.jpg');
 new Product('Bathroom Tablet Stand', './img/bathroom.jpg');
-new Product('Boots', 'img/boots.jpg');
+new Product('Boots', './img/boots.jpg');
 new Product('Breakfast Maker', './img/breakfast.jpg');
 new Product('Meatball Bubblegum', './img/bubblegum.jpg');
 new Product('Chair', './img/chair.jpg');
