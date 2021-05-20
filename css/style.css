@@ -64,11 +64,18 @@ section#allProducts {
   text-align: center;
 }
 
+.results {
+  display: none;
+}
+
 section ul {
   margin: 0.5%;
   padding: 1%;
 }
 
 li {
+  list-style-type: none;
+  margin-left: 0.75%;
   padding: 1px;
 }
+
