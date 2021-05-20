@@ -48,25 +48,28 @@ function renderThreeProds(leftProd, midProd, rightProd) {
   currentLeftProd.timesShown++;
   currentMidProd.timesShown++;
   currentRightProd.timesShown++;
-  // console.log(currentRightProd);
+}
+
+function pickRandomNumber() {
+  return Math.floor(Math.random() * Product.allProducts.length);
 }
 
 // pick random products and make sure that all 3 products displayed are different products
 function pickRandomProducts() {
-  const leftProdIndex = Math.floor(Math.random() * Product.allProducts.length);
-  const midProdIndex = Math.floor(Math.random() * Product.allProducts.length);
-  let rightProdIndex;
+  let leftProdIndex = pickRandomNumber();
+  let midProdIndex = pickRandomNumber();
+  let rightProdIndex = pickRandomNumber();
 
-  while (rightProdIndex === undefined || rightProdIndex === midProdIndex || rightProdIndex === leftProdIndex) {
-    rightProdIndex = Math.floor(Math.random() * Product.allProducts.length);
-    // assign the current products based off the index numbers generated
-    currentLeftProd = Product.allProducts[leftProdIndex];
-    currentMidProd = Product.allProducts[midProdIndex];
-    currentRightProd = Product.allProducts[rightProdIndex];
+  while (rightProdIndex === midProdIndex || rightProdIndex === leftProdIndex || midProdIndex === leftProdIndex) {
+    rightProdIndex = pickRandomNumber();
+    leftProdIndex = pickRandomNumber();
+    midProdIndex = pickRandomNumber();
   }
+  // assign the current products based off the index numbers generated
+  currentLeftProd = Product.allProducts[leftProdIndex];
+  currentMidProd = Product.allProducts[midProdIndex];
+  currentRightProd = Product.allProducts[rightProdIndex];
 }
-
-
 
 
 function renderVoteTally() {
@@ -85,8 +88,8 @@ function renderVoteTally() {
 function handleClick(e) {
   console.log('I am listening');
   let thingTheyClickedOn = e.target;
-  console.log(thingTheyClickedOn);
-  if (voteCounter < 10) {
+  
+  if (voteCounter < 25) {
     if (thingTheyClickedOn === leftProdImgTag || thingTheyClickedOn === midProdImgTag || thingTheyClickedOn === rightProdImgTag) {
       // add 1 to the vote and increment the counter
       voteCounter++;
@@ -108,13 +111,17 @@ function handleClick(e) {
       renderThreeProds(currentLeftProd, currentMidProd, currentRightProd);
     }
   } else {
-    allProductsSectionTag.removeEventListener('click', handleClick);
+    leftProdImgTag.removeEventListener('click', handleClick);
+    midProdImgTag.removeEventListener('click', handleClick);
+    rightProdImgTag.removeEventListener('click', handleClick);
     renderVoteTally();
   }
 }
 
 // add a listener and a handler
-allProductsSectionTag.addEventListener('click',handleClick);
+leftProdImgTag.addEventListener('click',handleClick);
+midProdImgTag.addEventListener('click',handleClick);
+rightProdImgTag.addEventListener('click',handleClick);
 
 
 new Product('R2-D2 Bag', 'img/bag.jpg');
